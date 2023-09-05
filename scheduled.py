@@ -5,11 +5,13 @@ import logging
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
+from strings import MORNING_TEXT, EVENING_TEXT
+
 logging.basicConfig(level=logging.DEBUG)
 CHANNEL_ID = "C05N52FH0SF"
 
 
-def sendMessage(slack_client):
+def sendMessage(slack_client, txt):
     # make the POST request through the python slack client
 
     # check if the request was a success
@@ -22,8 +24,8 @@ def sendMessage(slack_client):
             print(f"Error getting user list: {response['error']}")
         for user_id in user_ids:
             slack_client.chat_postMessage(
-                channel="#faang-soon",
-                text=f"Hello <@{user_id}>, hope you are good. Please send in your update.",
+                channel="#testbot",
+                text=f"Hello <@{user_id}>, hope you are good. {txt}.",
             )
 
     except SlackApiError as e:
@@ -39,7 +41,7 @@ if __name__ == "__main__":
     # # For testing
     # msg = "<@U043TGDDV7G|Baaba>, <@U04QE7S6AHY|Senpai>, <@U04R0GQGEBB|Nai>, please send in your update."
     # schedule.every(10).seconds.do(lambda: sendMessage(slack_client))
-    sendMessage(slack_client)
+    sendMessage(slack_client, MORNING_TEXT)
 
     # schedule.every().monday.at("13:15").do(lambda: sendMessage(slack_client, msg))
     logging.info("entering loop")
