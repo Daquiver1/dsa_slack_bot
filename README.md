@@ -1,14 +1,65 @@
-# slackbot-tutorial
+# Daquiver's DSA Slack Bot
 
-Code/tutorial updated to reflect Slack API v1 -> v2 changes. [Updated tutorial is available on Medium](https://medium.freecodecamp.org/how-to-build-a-basic-slackbot-a-beginners-guide-6b40507db5c5) as I cannot edit the content on freeCodeCamp's website.
+This is a Python-based Slack bot designed for any slack channel. It enables users to view their previous history, add today's update to their history, and view weekly reports. The bot integrates several powerful libraries, including SlackClient, FastAPI, and SQLAlchemy, to provide seamless functionality.
 
-Used in conjunction with this [tutorial](https://medium.freecodecamp.org/how-to-build-a-basic-slackbot-a-beginners-guide-6b40507db5c5)
+## Prerequisites
 
-Feel free to [tweet me @vishifishy](https://twitter.com/vishifishy) if you have any trouble, feedback, or wanna say thanks!
+Before running the script, please make sure you have the following:
 
-* A user should be able to view their previous history.
-* A user should be able to add today's update to their history.
-* Should send daily reminders to users to send in their updates. Morning and Evening.
-* Schedule messages. 
-* Switch to fastapi.
-* Host the bot.
+- A Slack bot token
+- A Slack bot ID
+
+## Getting Started
+
+1. Clone the repository:
+
+   ```python
+   git clone https://github.com/Daquiver1/dsa_slack_bot.git
+   ```
+
+2. Change to the project directory:
+
+   ```python
+   cd dsa_slack_bot
+   ```
+
+3. Install the required dependencies:
+
+   ```python
+    pip install -r requirements.txt
+   ```
+
+4. Rename the `.env.template` file to `.env` and update the environment variables with your own values.
+
+5. Run the python file with the following command:
+
+   ```python
+   uvicorn src.main.api:app --reload
+   ```
+
+6. `The app is now running.`
+
+## TODO
+
+- [ ] Integrate Celery for background tasks(weekly report and daily reminders.)
+- [ ] Add test cases.
+
+## Contributing
+
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please create an issue or submit a pull request.
+
+## Contact
+
+[![Gmail](https://img.shields.io/badge/Gmail-Mail-red.svg?logo=gmail&logoColor=white)](mailto:cabrokwa11@gmail.com)
+[![Linkedin](https://img.shields.io/badge/Linkedin-follow-blue.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/daquiver/)
+[![Twitter](https://img.shields.io/badge/Twitter-follow-blue.svg?logo=twitter&logoColor=white)](https://twitter.com/daquiver1)
+[![Medium](https://img.shields.io/badge/Medium-follow-black.svg?logo=medium&logoColor=white)](https://daquiver.medium.com)
+
+---
+
+```python
+
+if youEnjoyed:
+    starThisRepository()
+
+```
