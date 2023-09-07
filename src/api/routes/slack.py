@@ -34,9 +34,7 @@ async def hello(
 ) -> None:
     """Welcome Message."""
     slack_response: SlackPayload = parse_slack_payload(str(await payload.body())[1:])
-    return send_message_to_channel(
-        slack_response.channel_id, slack_response.user_id, HELLO
-    )
+    send_message_to_channel(slack_response.channel_id, slack_response.user_id, HELLO)
 
 
 @router.post("/update", status_code=200)
@@ -51,13 +49,15 @@ async def update(
     slack_response: SlackPayload = parse_slack_payload(str(await payload.body())[1:])
     # validate if user has created an account.
     if not await user_repo.get_user_by_slack_id(slack_response.user_id):
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, DONT_HAVE_AN_ACCOUNT
         )
+        return
     if not is_valid_number(slack_response.text):
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, INVALID_NUMBER
         )
+        return
 
     # Add to database
     leetcode_record = await leetcode_update_repo.add_new_leetcode_update(
@@ -68,10 +68,11 @@ async def update(
     if leetcode_record:
         # Send confirmation message
         message = f"Thanks for the update. Your leetcode update has been stored successfully. You solved {slack_response.text} questions today. Good work!.\n\nWe go again tomorrow."
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, message
         )
-    return send_message_to_channel(
+        return
+    send_message_to_channel(
         slack_response.channel_id, slack_response.user_id, ALREADY_SENT_UPDATE
     )
 
@@ -95,14 +96,15 @@ async def create(
         user = await user_repo.add_new_user(new_user=user)
         if user:
             # Send confirmation message
-            return send_message_to_channel(
+            send_message_to_channel(
                 slack_response.channel_id,
                 slack_response.user_id,
                 ACCOUNT_CREATED,
             )
+            return
 
         # Account already created.
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, ALREADY_HAVE_AN_ACCOUNT
         )
 
@@ -119,9 +121,10 @@ async def weekly_report(
     slack_response: SlackPayload = parse_slack_payload(str(await payload.body())[1:])
     # validate if user has created an account.
     if not await user_repo.get_user_by_slack_id(slack_response.user_id):
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, DONT_HAVE_AN_ACCOUNT
         )
+        return
 
     # Get user's leetcode updates
     leetcode_updates = await leetcode_update_repo.get_users_leetcode_update_weekly(
@@ -142,10 +145,11 @@ async def weekly_report(
         summary_message = f"For this week, you've solved a total of {count} Leetcode questions. Congratulations!"
         combined_message = f"{message}\n\n{summary_message}"
 
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, combined_message
         )
-    return send_message_to_channel(
+        return
+    send_message_to_channel(
         slack_response.channel_id, slack_response.user_id, NO_UPDATE
     )
 
@@ -162,9 +166,10 @@ async def history(
     slack_response: SlackPayload = parse_slack_payload(str(await payload.body())[1:])
     # validate if user has created an account.
     if not await user_repo.get_user_by_slack_id(slack_response.user_id):
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, DONT_HAVE_AN_ACCOUNT
         )
+        return
 
     # Get user's leetcode updates
     leetcode_updates = await leetcode_update_repo.get_all_of_users_leetcode_update(
@@ -186,11 +191,12 @@ async def history(
         )
         combined_message = f"{message}\n\n{summary_message}"
 
-        return send_message_to_channel(
+        send_message_to_channel(
             slack_response.channel_id, slack_response.user_id, combined_message
         )
+        return
 
-    return send_message_to_channel(
+    send_message_to_channel(
         slack_response.channel_id, slack_response.user_id, NO_UPDATE
     )
 

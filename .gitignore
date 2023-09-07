@@ -5,7 +5,7 @@ tutorial/
 .env
 
 # Database
-#app.db 
+app.db 
 
 # Vscode Settingws
 .vscode/
