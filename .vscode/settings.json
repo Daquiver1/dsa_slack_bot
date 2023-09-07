@@ -1,6 +1,12 @@
 {
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
   },
-  "python.formatting.provider": "none"
+  "python.formatting.provider": "black",
+  "python.languageServer": "Pylance",
+  "cSpell.words": ["leetcode", "plpgsql", "poolclass", "testbot"]
 }

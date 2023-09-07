@@ -1,2 +1,15 @@
 tutorial/
+
+# Config 
+.flake8
 .env
+
+# Database
+app.db 
+
+# Vscode Settingws
+.vscode/
+
+# Python bytecode
+__pycache__/
+__init__.py
